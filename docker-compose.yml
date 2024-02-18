@@ -1,0 +1,27 @@
+version: "2.3"
+
+services:
+  app:
+    restart: always
+    container_name: app
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+     - API_KEY=${API_KEY}
+    ports:
+    - "8100:8100"
+    depends_on:
+    - ai_manager
+
+  ai_manager:
+    restart: always
+    mem_limit: 32G
+    image: ai_manger:latest
+    environment:
+     - API_KEY=${API_KEY}
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+    - "5100:5100"
